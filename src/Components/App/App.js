@@ -39,8 +39,41 @@ class App extends React.Component {
           album: 'Album K07LM',
           id: 4
         }
+      ],
+      playlist: 'My Playlist',
+      playlistTracks: [
+        {
+          name: 'another chance',
+          artist: 'Slipfunc',
+          album: 'Album F01L',
+          id: 5
+        },
+        {
+          name: 'Royalty',
+          artist: 'Egzod, M.C & N',
+          album: 'Album EJ01',
+          id: 6
+        },
+        {
+          name: 'Legends Never Die',
+          artist: 'League of Legends',
+          album: 'TR003',
+          id: 7
+        }
       ]
     };
+
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack(track) {
+    const tracks = this.state.playlistTracks;
+    if (tracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
+    }
+
+    tracks.push(track);
+    this.setState({ playlistTracks: tracks });
   }
   
   render() {
@@ -50,8 +83,12 @@ class App extends React.Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults}/>
-            <Playlist />
+            <SearchResults 
+              searchResults={this.state.searchResults} 
+              onAdd={this.addTrack} />
+            <Playlist 
+              playlistName={this.state.playlist} 
+              playlistTracks={this.state.playlistTracks} />
           </div>
         </div>
       </div>
